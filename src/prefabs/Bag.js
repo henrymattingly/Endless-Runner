@@ -12,12 +12,11 @@ class Bag extends Phaser.GameObjects.Sprite {
         {
             this.x -= this.moveSpeed;
         }
-        if (keyRIGHT.isDown && this.x <= game.config.width - borderUISize - this.width) 
+        if(keyRIGHT.isDown && this.x <= game.config.width - borderUISize - this.width) 
         {
             this.x += this.moveSpeed;
         }
-        
-        if (keyDOWN.isDown && this.y <= game.config.height - borderUISize - this.height) 
+        if(keyDOWN.isDown && this.y <= game.config.height - borderUISize - this.height)
         {
             this.y += this.moveSpeed;
         }
@@ -25,6 +24,7 @@ class Bag extends Phaser.GameObjects.Sprite {
         {
             this.y -= this.moveSpeed;
         }
+        
     }
 
 }
