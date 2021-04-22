@@ -41,6 +41,7 @@ class Menu extends Phaser.Scene {
     if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
       // Novice mode
       game.settings = {
+        garbageSpeed : 3,
         gameTimer: 60000    
       }
       //this.sound.play('sfx_select');
@@ -49,6 +50,7 @@ class Menu extends Phaser.Scene {
     if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
       // Expert mode
       game.settings = {
+        garbageSpeed : 5,
         gameTimer: 45000    
       }
       //this.sound.play('sfx_select');
