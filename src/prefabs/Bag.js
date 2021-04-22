@@ -1,9 +1,9 @@
 class Bag extends Phaser.GameObjects.Sprite {
-    constructor (scene, x, y, texture, frame){
-        super (scene, x, y, texture, frame);
+    constructor(scene, x, y, texture, frame) {
+        super(scene, x, y, texture, frame);
 
-        scene.add.extisting(this);
-        this.moveSpeed = 4;
+        scene.add.existing(this);   // add to existing, displayList, updateList
+        this.moveSpeed = 4;         // pixels per frame
     }
     
     update()
@@ -16,15 +16,15 @@ class Bag extends Phaser.GameObjects.Sprite {
         {
             this.x += this.moveSpeed;
         }
-        /*
-        if (keyUP.isDown && this.y <= game.config.height - borderUISize - this.height) 
+        
+        if (keyDOWN.isDown && this.y <= game.config.height - borderUISize - this.height) 
         {
             this.y += this.moveSpeed;
         }
-        if (keyDOWN.isDown && this.y >= game.config.height - borderUISize - this.height) 
+        if (keyUP.isDown && this.y <= game.config.height - borderUISize + this.height) 
         {
             this.y -= this.moveSpeed;
-        }*/
+        }
     }
 
 }
