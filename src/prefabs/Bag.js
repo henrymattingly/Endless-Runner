@@ -21,7 +21,7 @@ class Bag extends Phaser.GameObjects.Sprite {
         {
             this.y += this.moveSpeed;
         }
-        if (keyUP.isDown && this.y <= game.config.height - borderUISize + this.height) 
+        if (keyUP.isDown && this.y >= borderUISize + this.height) 
         {
             this.y -= this.moveSpeed;
         }

@@ -24,7 +24,7 @@ class Play extends Phaser.Scene {
 
         //create the trash asset
         //this.garbage = new Garbage(this,game.config.width + borderUISize * 3, borderUISize*5 + borderPadding * 2, 'garbage', 0, 20).setOrigin(0, 0);
-        this.garbage = new Garbage(this, game.config.width, borderUISize*6 + borderPadding*4, 'garbage', 0, 10).setOrigin(0,0);
+        //this.garbage = new Garbage(this, game.config.width, borderUISize*6 + borderPadding*4, 'garbage', 0, 10).setOrigin(0,0);
 
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
@@ -37,7 +37,7 @@ class Play extends Phaser.Scene {
         
         //allows bag to move
         this.Bag.update();
-        this.garbage.update();
+        //this.garbage.update();
 
         //move background
         this.background.tilePositionX -= 1;
