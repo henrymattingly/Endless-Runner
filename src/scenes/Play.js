@@ -14,6 +14,8 @@ class Play extends Phaser.Scene {
 
         this.garbageSpeed = -400;
         this.garbageSpeedMax = -1000;
+
+
         //load assets in the scene
         this.background = this.add.tileSprite(0,0,640,480,'background').setOrigin(0,0);
 
@@ -26,9 +28,11 @@ class Play extends Phaser.Scene {
         bag.setMaxVelocity(150,300);
         bag.destroyed = false;
 
-        this.trash = new Garbage(this, game.config.width, 30, 'garbage',0 , 20).setOrigin(0.5);
-        this.trash2 = new Garbage(this, game.config.width,game.config.height/2, 'garbage', 0, 20).setOrigin(0,0);
-        this.trash3 = new Garbage(this, game.config.width, 400, 'garbage', 0, 10).setOrigin(0,0);
+        /*
+        this.garbage = new Garbage(this, game.config.width, 30, 'garbage',0 , 20).setOrigin(0.5);
+        this.garbage2 = new Garbage(this, game.config.width,game.config.height/2, 'garbage', 0, 20).setOrigin(0,0);
+        this.garbage3 = new Garbage(this, game.config.width, 400, 'garbage', 0, 10).setOrigin(0,0);
+        */
 
         //set up keys for player input
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
@@ -36,30 +40,34 @@ class Play extends Phaser.Scene {
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
-            //set of group for spawning garbage
-        this.garbageGroup = this.add.group({
-            runChildUpdate: true
+        //create group for trash to spawn
+        var trashGroup = this.physics.add.group({
+            key: 'garbage',
+            quantity: 5,
+            bounceX: 1,
+            bounceY: 1,
+            collideWorldBounds: true,
+            velocityX: 300,
+            velocityY: 150
         });
+        //randomly spawns all the trashCans
+        Phaser.Actions.RandomRectangle(trashGroup.getChildren(), this.physics.world.bounds);
+        //adds world bound collider to the trash
+        this.physics.add.collider(trashGroup);
 
+        this.physics.add.overlap(trashGroup, bag, this.trashCollision)
 
-        
     }
 
-    //create new garbage and add them to group
-    addGarbage()
-    {
-        let tilt = Phaser.Math.Between(0, 50);
-        let garbage = new Garbage(this, this.garbageSpeed - tilt);
-        this.garbageGroup.add(garbage);
-    }
 
     update(){
         //move background
         this.background.tilePositionX -= 1;
-
-        this.trash.update();
-        this.trash2.update();
-        this.trash3.update();
+/*
+        this.garbage.update();
+        this.garbage2.update();
+        this.garbage3.update();
+*/
 
         //allows bag to move
         if(!bag.destroyed)
@@ -81,22 +89,10 @@ class Play extends Phaser.Scene {
                 bag.body.velocity.x -= bagVelocity;
             }
 
-            //this.physics.world.collide(bag, this.garbageGroup, this.trashCollision, null, this);
+            this.physics.world.collide(bag, this.trashGroup, this.trashCollision, null, this);
         }
 
 
-    }
-
-    checkCollision(bag, trash) {
-        // simple AABB checking
-        if (bag.x < trash.x + trash.width && 
-            bag.x + trash.width > trash.x && 
-            bag.y < trash.y + trash.height &&
-            bag.height + bag.y > trash. y) {
-                return true;
-        } else {
-            return false;
-        }
     }
 
     trashCollision()
