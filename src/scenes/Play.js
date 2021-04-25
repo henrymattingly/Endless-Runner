@@ -102,3 +102,5 @@ class Play extends Phaser.Scene {
     }
 
 }
+
+// fix spawn location for trash, sometimes spawn on player and instantly ends the game
