@@ -19,3 +19,7 @@ let borderPadding = borderUISize / 3;
 
 // reserve keyboard variables
 let keyUP, keyDOWN, keyLEFT, keyRIGHT;
+let bag = null;
+const bagVelocity = 40;
+
+let cursor;

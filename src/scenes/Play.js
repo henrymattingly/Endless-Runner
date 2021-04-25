@@ -11,36 +11,98 @@ class Play extends Phaser.Scene {
     }
     
     create(){
+
+        this.garbageSpeed = -400;
+        this.garbageSpeedMax = -1000;
         //load assets in the scene
         this.background = this.add.tileSprite(0,0,640,480,'background').setOrigin(0,0);
 
          //create bag
-        this.bag = new Bag(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'bag').setOrigin(0.5, 0);
-        //this.bag = this.physics.add.image(400,300, 'bag').setOrigin(0.5);
+        bag = this.physics.add.sprite(124, game.config.height/2, 'bag').setOrigin(0.5);
+        bag.setCollideWorldBounds(true);
+        bag.setBounce(1);
+        bag.setDragY(500);
+        bag.setDragX(500);  
+        bag.setMaxVelocity(150,300);
+        bag.destroyed = false;
 
-        this.garbage = this.physics.add.image(200,100, 'garbage');
-        
+        this.trash = new Garbage(this, game.config.width, 30, 'garbage',0 , 20).setOrigin(0.5);
+        this.trash2 = new Garbage(this, game.config.width,game.config.height/2, 'garbage', 0, 20).setOrigin(0,0);
+        this.trash3 = new Garbage(this, game.config.width, 400, 'garbage', 0, 10).setOrigin(0,0);
 
-        this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0 ,0);
-        this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0 ,0);
-        this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
-        this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
-
-        
+        //set up keys for player input
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
+            //set of group for spawning garbage
+        this.garbageGroup = this.add.group({
+            runChildUpdate: true
+        });
+
+
+        
+    }
+
+    //create new garbage and add them to group
+    addGarbage()
+    {
+        let tilt = Phaser.Math.Between(0, 50);
+        let garbage = new Garbage(this, this.garbageSpeed - tilt);
+        this.garbageGroup.add(garbage);
     }
 
     update(){
         //move background
         this.background.tilePositionX -= 1;
 
-        //allows bag to move
-        this.bag.update();
+        this.trash.update();
+        this.trash2.update();
+        this.trash3.update();
 
+        //allows bag to move
+        if(!bag.destroyed)
+        {
+            if(keyUP.isDown)
+            {
+                bag.body.velocity.y -= bagVelocity;
+            }
+            if (keyDOWN.isDown)
+            {
+                bag.body.velocity.y += bagVelocity;
+            }
+            if(keyRIGHT.isDown)
+            {
+                bag.body.velocity.x += bagVelocity;
+            }
+            if (keyLEFT.isDown)
+            {
+                bag.body.velocity.x -= bagVelocity;
+            }
+
+            //this.physics.world.collide(bag, this.garbageGroup, this.trashCollision, null, this);
+        }
+
+
+    }
+
+    checkCollision(bag, trash) {
+        // simple AABB checking
+        if (bag.x < trash.x + trash.width && 
+            bag.x + trash.width > trash.x && 
+            bag.y < trash.y + trash.height &&
+            bag.height + bag.y > trash. y) {
+                return true;
+        } else {
+            return false;
+        }
+    }
+
+    trashCollision()
+    {
+        bag.destroyed = true;
+        bag.destory();
     }
 
 }
