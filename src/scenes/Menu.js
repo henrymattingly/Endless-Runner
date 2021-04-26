@@ -28,7 +28,7 @@ class Menu extends Phaser.Scene {
         this.add.text(game.config.width/2, game.config.height/2, 'Use arrows to move', menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#00FF00';
         menuConfig.color = '#000';
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 30, 'Press ← for Easy or → for Hard', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 30, 'Press ← or → to play', menuConfig).setOrigin(0.5);
 
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -38,23 +38,9 @@ class Menu extends Phaser.Scene {
     }
     
   update() {
-    if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
-      // Novice mode
-      game.settings = {
-        garbageSpeed : 3,
-        gameTimer: 60000    
-      }
+    if (Phaser.Input.Keyboard.JustDown(keyLEFT) || Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
       //this.sound.play('sfx_select');
       this.scene.start("playScene");    
-    }
-    if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
-      // Expert mode
-      game.settings = {
-        garbageSpeed : 5,
-        gameTimer: 45000    
-      }
-      //this.sound.play('sfx_select');
-      this.scene.start("playScene");    
-    }
+    }  
   }
 }
