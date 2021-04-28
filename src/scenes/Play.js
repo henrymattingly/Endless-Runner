@@ -63,6 +63,7 @@ class Play extends Phaser.Scene {
         this.score = 0;
 
         // display score
+        
         let scoreConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
@@ -127,10 +128,12 @@ class Play extends Phaser.Scene {
 
 
     }
-
     coinCollide()
     {
         this.score += 10;
+        //this.scoreLeft = this.add.text(0, 0, this.score, scoreConfig);
+        //this.coinGroup.destroy();
+
     }
     //when bag collides with trash
     trashCollision()
