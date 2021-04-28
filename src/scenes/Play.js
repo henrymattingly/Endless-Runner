@@ -10,6 +10,7 @@ class Play extends Phaser.Scene {
         this.load.image('moon', './assets/moon.png');
         this.load.image('street', './assets/street.png');
         this.load.image('garbage', './assets/spongboob.png');
+        this.load.image('coin', './assets/coin.png');
     }
     
     create(){
@@ -38,38 +39,59 @@ class Play extends Phaser.Scene {
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-/*
-        //create group for trash to spawn
-        var trashGroup = this.physics.add.group({
-            key: 'garbage',
-            quantity: 5,
-            bounceX: 1,
-            collideWorldBounds: true,
-            velocityX: 300,
-        });
 
-        //randomly spawns all the trashCans
-        Phaser.Actions.RandomRectangle(trashGroup.getChildren(), this.physics.world.bounds);
+        //creates trash in a group
 
-        //adds world bound collider to the trash
-        this.physics.add.collider(trashGroup);
-
-        this.physics.add.overlap(trashGroup, bag, this.trashCollision)
-*/
         this.trashGroup = this.add.group({
             runChildUpdate: true
         });
 
-        this.time.delayedCall(2500, () => {
+        this.coinGroup = this.add.group({
+            runChildUpdate: true
+        });
+
+        //creates time delay between each trash spawn
+        this.time.delayedCall(1500, () => {
             this.addTrash();
         });
+        
+
+        this.time.delayedCall(2000, () => {
+            this.addCoin();
+        });
+
+        this.score = 0;
+
+        // display score
+        let scoreConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+           // backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
+        this.scoreLeft = this.add.text(0, 0, this.score, scoreConfig);
+
     }
 
+    //adds trash to the scene
     addTrash()
     {
         let tilt = Phaser.Math.Between(0, 50);
         let trash = new Garbage(this, this.garbageSpeed - tilt);
         this.trashGroup.add(trash);
+    }
+    
+    addCoin()
+    {
+        let tilt = Phaser.Math.Between(0, 50);
+        let coin = new Coin(this, this.garbageSpeed - tilt);
+        this.coinGroup.add(coin);
     }
 
     update(){
@@ -98,12 +120,19 @@ class Play extends Phaser.Scene {
                 bag.body.velocity.x -= bagVelocity;
             }
 
-            this.physics.world.collide(bag, this.trashGroup, this.trashCollision, null, this);
+            //checks if the bag collides with any of the trash 
+            this.physics.world.collide(bag, this.trashGroup, this.trashCollision);
+            this.physics.world.collide(bag, this.coinGroup, this.coinCollide);
         }
 
 
     }
 
+    coinCollide()
+    {
+        this.score += 10;
+    }
+    //when bag collides with trash
     trashCollision()
     {
         bag.destroyed = true;
@@ -111,5 +140,3 @@ class Play extends Phaser.Scene {
     }
 
 }
-
-// fix spawn location for trash, sometimes spawn on player and instantly ends the game
