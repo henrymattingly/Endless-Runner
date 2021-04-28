@@ -29,7 +29,7 @@ class Play extends Phaser.Scene {
         bag.setBounce(1);
         bag.setDragY(500);
         bag.setDragX(500);  
-        bag.setMaxVelocity(150,300);
+        bag.setMaxVelocity(250,250);
         bag.destroyed = false;
 
 
