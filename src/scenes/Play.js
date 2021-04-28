@@ -6,7 +6,9 @@ class Play extends Phaser.Scene {
     preload(){
         //preload assets for the game here
         this.load.image('bag','./assets/rocketP1.png');
-        this.load.image('background','./assets/grassfield.png');
+        this.load.image('background','./assets/city.png');
+        this.load.image('moon', './assets/moon.png');
+        this.load.image('street', './assets/street.png');
         this.load.image('garbage', './assets/spongboob.png');
     }
     
@@ -18,6 +20,8 @@ class Play extends Phaser.Scene {
 
         //load assets in the scene
         this.background = this.add.tileSprite(0,0,640,480,'background').setOrigin(0,0);
+        this.moon = this.add.tileSprite(0,0,640,480,'moon').setOrigin(0,0);
+        this.street = this.add.tileSprite(0,0,640,480,'street').setOrigin(0,0);
 
          //create bag
         bag = this.physics.add.sprite(124, game.config.height/2, 'bag').setOrigin(0.5);
@@ -70,7 +74,9 @@ class Play extends Phaser.Scene {
 
     update(){
         //move background
-        this.background.tilePositionX -= 1;
+        this.background.tilePositionX += .6;
+        this.moon.tilePositionX += .2;
+        this.street.tilePositionX += 1.1
 
         //allows bag to move
         if(!bag.destroyed)
