@@ -123,7 +123,7 @@ class Play extends Phaser.Scene {
         this.sound.play('paper');
         this.score += 10;
         this.scoreLeft.text = this.score;
-        //this.coin.destroy();
+        //coin.collision();
         console.log("hello");
 
     }
