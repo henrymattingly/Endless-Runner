@@ -6,6 +6,9 @@ class Menu extends Phaser.Scene {
     preload()
     {
         //preload audio
+        this.load.audio('music', './assets/Plastic_Bag_by_Katy_Perry.mp3');
+        this.load.audio('paper', './assets/papergrab.mp3');
+        this.load.audio('trashcan', './assets/trashcan.mp3');
     }
 
     create()

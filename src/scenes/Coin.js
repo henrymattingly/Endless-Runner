@@ -15,7 +15,6 @@ class Coin extends Phaser.Physics.Arcade.Sprite{
         if(this.newCoin && this.x < game.config.width/2)
         {
             this.newCoin = false;
-
             this.scene.addCoin(this.parent, this.velocity);
         }
 
@@ -24,5 +23,10 @@ class Coin extends Phaser.Physics.Arcade.Sprite{
             this.destroy();
         }
         
+        
+    }
+    collision()
+    {
+        this.destroy();
     }
 }

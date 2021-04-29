@@ -14,6 +14,9 @@ class Play extends Phaser.Scene {
     }
     
     create(){
+        //play audio
+        this.sound.play('music');
+
 
         this.garbageSpeed = -400;
         this.garbageSpeedMax = -1000;
@@ -63,20 +66,7 @@ class Play extends Phaser.Scene {
         this.score = 0;
 
         // display score
-        
-        let scoreConfig = {
-            fontFamily: 'Courier',
-            fontSize: '28px',
-           // backgroundColor: '#F3B141',
-            color: '#843605',
-            align: 'right',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-            fixedWidth: 100
-        }
-        this.scoreLeft = this.add.text(0, 0, this.score, scoreConfig);
+        this.scoreLeft = this.add.text(0, 0, this.score);
 
     }
 
@@ -122,22 +112,25 @@ class Play extends Phaser.Scene {
             }
 
             //checks if the bag collides with any of the trash 
-            this.physics.world.collide(bag, this.trashGroup, this.trashCollision);
-            this.physics.world.collide(bag, this.coinGroup, this.coinCollide);
+            this.physics.world.collide(bag, this.trashGroup, this.trashCollision, null, this);
+            this.physics.world.collide(bag, this.coinGroup, this.coinCollide, null, this);
         }
 
 
     }
     coinCollide()
     {
+        this.sound.play('paper');
         this.score += 10;
-        //this.scoreLeft = this.add.text(0, 0, this.score, scoreConfig);
-        //this.coinGroup.destroy();
+        this.scoreLeft.text = this.score;
+        //this.coin.destroy();
+        console.log("hello");
 
     }
     //when bag collides with trash
     trashCollision()
     {
+        this.sound.play('trashcan');
         bag.destroyed = true;
         bag.destroy();
     }
