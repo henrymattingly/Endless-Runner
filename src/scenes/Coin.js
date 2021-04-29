@@ -22,5 +22,5 @@ class Coin extends Phaser.Physics.Arcade.Sprite{
         {
             this.destroy();
         }       
-    }
+    } 
 }

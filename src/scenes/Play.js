@@ -66,7 +66,7 @@ class Play extends Phaser.Scene {
         this.score = 0;
 
         // display score
-        this.scoreLeft = this.add.text(0, 0, this.score);
+        this.scoreLeft = this.add.text(0, 0, this.score,{fontSize: '32px', fill: '#ecf0f1'});
 
     }
 
@@ -123,7 +123,7 @@ class Play extends Phaser.Scene {
         this.sound.play('paper');
         this.score += 10;
         this.scoreLeft.text = this.score;
-        //coin.collision();
+        this.coinGroup.destroy();
         console.log("hello");
 
     }
