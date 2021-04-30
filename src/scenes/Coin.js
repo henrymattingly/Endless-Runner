@@ -12,12 +12,14 @@ class Coin extends Phaser.Physics.Arcade.Sprite{
 
     update()
     {
+        //spawn new coin when current one reaches middle of map
         if(this.newCoin && this.x < game.config.width/2)
         {
             this.newCoin = false;
             this.scene.addCoin(this.parent, this.velocity);
         }
 
+        //destory coin when it goes off screen
         if(this.x < -this.width)
         {
             this.destroy();

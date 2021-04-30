@@ -27,7 +27,7 @@ class Play extends Phaser.Scene {
         this.moon = this.add.tileSprite(0,0,640,480,'moon').setOrigin(0,0);
         this.street = this.add.tileSprite(0,0,640,480,'street').setOrigin(0,0);
 
-         //create bag
+         //create bag with physics
         bag = this.physics.add.sprite(124, game.config.height/2, 'bag').setOrigin(0.5);
         bag.setCollideWorldBounds(true);
         bag.setBounce(1);
@@ -78,6 +78,7 @@ class Play extends Phaser.Scene {
         this.trashGroup.add(trash);
     }
     
+    //add coin to group
     addCoin()
     {
         let tilt = Phaser.Math.Between(0, 50);
@@ -113,17 +114,32 @@ class Play extends Phaser.Scene {
 
             //checks if the bag collides with any of the trash 
             this.physics.world.collide(bag, this.trashGroup, this.trashCollision, null, this);
-            this.physics.world.collide(bag, this.coinGroup, this.coinCollide, null, this);
+
+            //checks if bag overlaps with coin
+            this.physics.world.overlap(bag, this.coinGroup, this.coinCollide, null, this);
         }
 
 
     }
+    //adds points to score on collision with coin
+    // destory coin on collide
     coinCollide()
     {
         this.sound.play('paper');
         this.score += 10;
         this.scoreLeft.text = this.score;
-        this.coinGroup.destroy();
+
+        //help from TA to destory instance of coin on collision
+        var minDis = 100000;
+        var temp = null;
+        this.coinGroup.getChildren().forEach(function(coin){
+            var dis = Math.sqrt(Math.pow(coin.x-bag.x,2) + Math.pow(coin.y - bag.y,2));
+            if(dis < minDis){
+                temp = coin;
+                minDis = dis;
+            }
+        })
+        temp.destroy();
         console.log("hello");
 
     }
@@ -134,5 +150,4 @@ class Play extends Phaser.Scene {
         bag.destroyed = true;
         bag.destroy();
     }
-
 }

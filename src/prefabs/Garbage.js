@@ -12,6 +12,7 @@ class Garbage extends Phaser.Physics.Arcade.Sprite{
 
     update()
     {
+        //spawn new trash when current one reaches middle of map
         if(this.newTrash && this.x < game.config.width/2)
         {
             this.newTrash = false;
@@ -19,6 +20,7 @@ class Garbage extends Phaser.Physics.Arcade.Sprite{
             this.scene.addTrash(this.parent, this.velocity);
         }
 
+        //destory trash when it goes off screen
         if(this.x < -this.width)
         {
             this.destroy();
