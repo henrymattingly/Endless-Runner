@@ -9,10 +9,17 @@ class Menu extends Phaser.Scene {
         this.load.audio('music', './assets/Plastic_Bag_by_Katy_Perry.mp3');
         this.load.audio('paper', './assets/papergrab.mp3');
         this.load.audio('trashcan', './assets/trashcan.mp3');
+        //preload assets for the game here
+        this.load.image('background','./assets/city.png');
+        this.load.image('moon', './assets/moon.png');
+        this.load.image('street', './assets/street.png');
     }
 
     create()
     {
+        this.background = this.add.tileSprite(0,0,640,480,'background').setOrigin(0,0);
+        this.moon = this.add.tileSprite(0,0,640,480,'moon').setOrigin(0,0);
+        this.street = this.add.tileSprite(0,0,640,480,'street').setOrigin(0,0);
         //menu text fongiguration
         let menuConfig = {
             fontFamily: 'Courier',
@@ -45,5 +52,8 @@ class Menu extends Phaser.Scene {
       //this.sound.play('sfx_select');
       this.scene.start("playScene");    
     }  
+    this.background.tilePositionX += .6;
+    this.moon.tilePositionX += .2;
+    this.street.tilePositionX += 1.1
   }
 }
