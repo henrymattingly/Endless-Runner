@@ -5,12 +5,12 @@ class Play extends Phaser.Scene {
 
     preload(){
         //preload assets for the game here
-        this.load.image('bag','./assets/rocketP1.png');
+        this.load.image('bag','./assets/pinkplastic.png');
         this.load.image('background','./assets/city.png');
         this.load.image('moon', './assets/moon.png');
         this.load.image('street', './assets/street.png');
-        this.load.image('garbage', './assets/spongboob.png');
-        this.load.image('coin', './assets/coin.png');
+        this.load.image('garbage', './assets/trashcan.png');
+        this.load.image('coin', './assets/blueplastic.png');
     }
     
     create(){
@@ -140,7 +140,6 @@ class Play extends Phaser.Scene {
             }
         })
         temp.destroy();
-        console.log("hello");
 
     }
     //when bag collides with trash

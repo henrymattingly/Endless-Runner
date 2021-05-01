@@ -21,5 +21,5 @@ let borderPadding = borderUISize / 3;
 let keyUP, keyDOWN, keyLEFT, keyRIGHT;
 let bag = null;
 const bagVelocity = 40;
-const garbageWidth = 32;
-const garbageHeight = 32;
+const garbageWidth = 88;
+const garbageHeight = 88;
