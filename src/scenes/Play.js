@@ -35,6 +35,7 @@ class Play extends Phaser.Scene {
         bag.setDragX(500);  
         bag.setMaxVelocity(250,250);
         bag.destroyed = false;
+        bag.angle = 90;
 
 
         //set up keys for player input
@@ -148,5 +149,6 @@ class Play extends Phaser.Scene {
         this.sound.play('trashcan');
         bag.destroyed = true;
         bag.destroy();
+        //this.scene.start('gameOver');
     }
 }
