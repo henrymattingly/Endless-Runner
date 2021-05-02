@@ -36,6 +36,7 @@ class Play extends Phaser.Scene {
         bag.setMaxVelocity(250,250);
         bag.destroyed = false;
         bag.angle = 90;
+        bag.setGravityY(100);
 
 
         //set up keys for player input
@@ -122,6 +123,7 @@ class Play extends Phaser.Scene {
 
 
     }
+
     //adds points to score on collision with coin
     // destory coin on collide
     coinCollide()
