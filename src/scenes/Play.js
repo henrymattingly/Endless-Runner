@@ -21,6 +21,12 @@ class Play extends Phaser.Scene {
         this.garbageSpeed = -400;
         this.garbageSpeedMax = -1000;
 
+        //define keys
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+        keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
 
         //load assets in the scene
         this.background = this.add.tileSprite(0,0,640,480,'background').setOrigin(0,0);
@@ -38,12 +44,6 @@ class Play extends Phaser.Scene {
         bag.angle = 90;
         bag.setGravityY(100);
 
-
-        //set up keys for player input
-        keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
-        keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
-        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
         //creates trash in a group
 
@@ -120,6 +120,11 @@ class Play extends Phaser.Scene {
             //checks if bag overlaps with coin
             this.physics.world.overlap(bag, this.coinGroup, this.coinCollide, null, this);
         }
+        if(keyR.isDown && bag.destroyed)
+        {
+            this.game.sound.stopAll();
+            this.scene.restart();
+        }
 
 
     }
@@ -151,6 +156,28 @@ class Play extends Phaser.Scene {
         this.sound.play('trashcan');
         bag.destroyed = true;
         bag.destroy();
-        //this.scene.start('gameOver');
+
+        let menuConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 0
+        }
+            // show menu text
+        this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'Plastic Adventure', menuConfig).setOrigin(0.5);
+        menuConfig.backgroundColor = '#00FF00';
+        menuConfig.color = '#000';
+        this.add.text(game.config.width/2, game.config.height/2, 'Press R to restart', menuConfig).setOrigin(0.5);
+        
+        if(keyR.isDown)
+        {
+            this.scene.restart();
+        }
     }
 }

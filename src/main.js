@@ -18,7 +18,7 @@ let borderUISize = game.config.height / 15;
 let borderPadding = borderUISize / 3;
 
 // reserve keyboard variables
-let keyUP, keyDOWN, keyLEFT, keyRIGHT;
+let keyUP, keyDOWN, keyLEFT, keyRIGHT, keyR;
 let bag = null;
 const bagVelocity = 40;
 const garbageWidth = 88;
